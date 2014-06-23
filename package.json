@@ -1,0 +1,30 @@
+{
+  "name": "xml4node",
+  "version": "0.0.0",
+  "description": "Medium weight xml library for manipulating XML",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/plediii/xml4node.git"
+  },
+  "keywords": [
+    "nodejs",
+    "xml",
+    "xpath"
+  ],
+  "author": "Paul J. Ledbetter III",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/plediii/xml4node/issues"
+  },
+  "homepage": "https://github.com/plediii/xml4node",
+  "dependencies": {
+    "sax": "^0.6.0",
+  },
+  "devDependencies": {
+    "eyes": "^0.1.8"
+  }
+}
