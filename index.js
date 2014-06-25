@@ -35,7 +35,10 @@ var text = function (str) {
 };
 
 var parseNode = function (str, cb) {
-    parseString('<root>' + str + '</root>', function (doc) {
+    return parseString('<root>' + str + '</root>', function (err, doc) {
+        if (err) {
+            throw err;
+        }
         return cb(doc.root.children[0]);
     });
 };
