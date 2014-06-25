@@ -57,6 +57,17 @@ var removeNode = function (parent, nodename) {
     }
 };
 
+var defaultNode = function (parent, node) {
+    if (_.isString(node)) {
+        return parseNode(node, function (parsed) {
+            setNode(parent, parsed);
+        });
+    }
+    if (!parent.hash.hasOwnProperty(node.name)) {
+        appendNode(parent, node);
+    }
+};
+
 var setNode = function (parent, node) {
     if (_.isString(node)) {
         return parseNode(node, function (parsed) {
@@ -231,6 +242,7 @@ var docAction = function (doc, route, action) {
     }
 };
 
+
 _.extend(module.exports, {
     parseString: parseString
     , docToString: docToString
@@ -239,6 +251,7 @@ _.extend(module.exports, {
     , text: text
     , appendNode: appendNode
     , setNode: setNode
+    , defaultNode: defaultNode
     , doc: doc
     , value: value
     , docEach: docEach
