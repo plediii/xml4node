@@ -30,7 +30,7 @@ var text = function (str) {
     return {
         type: 'text'
         , name: 'text()'  // this shouldn't be used
-        , body: str
+        , body: '' + str
     };
 };
 
