@@ -144,12 +144,14 @@ var withoutBOM = function (str) {
     }
 };
 
-var parser = sax.parser(true, {
-    trim: false
-    , normalize: false
-});
-
 var parseString = function (str, cb) {
+
+    var parser = sax.parser(true, {
+        trim: false
+        , normalize: false
+    });
+
+
     var nodestack = [];
     var nodes = [];
     var xmldoc = {};
@@ -201,12 +203,9 @@ var parseString = function (str, cb) {
         cb(null, xmldoc);
     };
 
-    parser.onready = function () {
-        parser
-            .write(withoutBOM(str.toString()))
-            .close();
-    }
-
+    parser
+        .write(withoutBOM(str.toString()))
+        .close();
 };
 
 var nodeEach = function (node, route, cb) {
