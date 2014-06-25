@@ -224,6 +224,41 @@ var nodeEach = function (node, route, cb) {
     }
 };
 
+var nodeFind = function (node, route, test) {
+    if (route.length === 0) {
+         if (test(node)) {
+             return node;
+         }
+    }
+    else {
+        var routeHead = _.head(route);
+        var routeRest = _.rest(route);
+        if (node.hash.hasOwnProperty(routeHead)) {
+            var routeNext = _.head(routeRest);
+            if (_.isNumber(routeNext)) {
+                return nodeFind(node.hash[routeHead][routeNext], _.rest(routeRest), test);
+            }
+            else {
+                var res;
+                if (_.find(node.hash[routeHead], function (subnode, idx) {
+                    res = nodeFind(subnode, routeRest, test);
+                    return res;
+                })) {
+                    return res;
+                }
+            }
+        }
+    }
+};
+
+var docFind = function (doc, route, test) {
+    var routeHead = _.head(route);
+    var routeRest = _.rest(route);
+    if (routeHead === doc.root.name) {
+        return nodeFind(doc.root, route.slice(1), test);
+    }
+};
+
 var nodeGet = function (node, route) {
     var res;
     nodeEach(node, route, function (subnode) {
@@ -274,4 +309,6 @@ _.extend(module.exports, {
     , docAction: docAction
     , docGet: docGet
     , nodeGet: nodeGet
+    , docFind: docFind
+    , nodeFind: nodeFind
 });

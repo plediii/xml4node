@@ -40,3 +40,8 @@ xml.docEach(d, ['procedure', 'steps', 0, 'step', 3], function (n) {
 });
 
 console.log(xml.docToString(d));
+
+console.log('found: ', xml.nodeToString(xml.docFind(d, ['procedure', 'steps', 'step'], function (step) {
+    console.log(xml.value(step));
+    return xml.value(step) === 'e';
+})));
