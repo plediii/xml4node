@@ -198,7 +198,7 @@ var parseString = function (str, cb) {
     };
 
     parser.onend = function () {
-        cb(xmldoc);
+        cb(null, xmldoc);
     };
 
     parser
