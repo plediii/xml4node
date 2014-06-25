@@ -1,5 +1,5 @@
 
-var xml = require('./xml4node');
+var xml = require('./index');
 var eyes = require('eyes');
 
 var d = xml.doc(xml.elt('procedure'));
