@@ -22,7 +22,8 @@
   },
   "homepage": "https://github.com/plediii/xml4node",
   "dependencies": {
-    "sax": "^0.6.0"
+    "sax": "^0.6.0",
+    "underscore": "^1.6.0"
   },
   "devDependencies": {
     "eyes": "^0.1.8"
