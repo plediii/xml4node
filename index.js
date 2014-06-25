@@ -232,6 +232,14 @@ var docEach = function (doc, route, cb) {
     }
 };
 
+var docGet = function (doc, route) {
+    var res;
+    docEach(doc, route, function (node) {
+        res = node;
+    });
+    return res;
+};
+
 var docAction = function (doc, route, action) {
     if (module.exports.hasOwnProperty(action[0])) {
         var method = module.exports[action[0]];
@@ -256,4 +264,5 @@ _.extend(module.exports, {
     , value: value
     , docEach: docEach
     , docAction: docAction
+    , docGet: docGet
 });
