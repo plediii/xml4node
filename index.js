@@ -63,7 +63,7 @@ var removeNode = function (parent, nodename) {
 var defaultNode = function (parent, node) {
     if (_.isString(node)) {
         return parseNode(node, function (parsed) {
-            setNode(parent, parsed);
+            defaultNode(parent, parsed);
         });
     }
     if (!parent.hash.hasOwnProperty(node.name)) {
@@ -182,7 +182,10 @@ var parseString = function (str, cb) {
             console.log('spare text: ', str);
         }
         else {
-            parent.children.push(text(str));
+            var node = text(str)
+            parent.children.push(node);
+            var hash = parent.hash[node.name] || (parent.hash[node.name] = []);
+            hash.push(node);            
         }
     };
 

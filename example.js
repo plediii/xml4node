@@ -32,7 +32,7 @@ xml.docEach(d, ['procedure', 'steps', 0, 'step', 3, 'text()'], function (n) {
     eyes.inspect(n);
 });
 
-xml.docAction(d, ['procedure', 'steps', 0, 'step', 3], ['setNode', 'replacement text']);
+xml.docAction(d, ['procedure', 'steps', 0, 'step', 3], ['setNode', xml.text('#9 Boiler')]);
 
 xml.docEach(d, ['procedure', 'steps', 0, 'step', 3], function (n) {
     console.log('doc each');
