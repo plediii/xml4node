@@ -201,9 +201,12 @@ var parseString = function (str, cb) {
         cb(null, xmldoc);
     };
 
-    parser
-        .write(withoutBOM(str.toString()))
-        .close();
+    parser.onready = function () {
+        parser
+            .write(withoutBOM(str.toString()))
+            .close();
+    }
+
 };
 
 var nodeEach = function (node, route, cb) {
