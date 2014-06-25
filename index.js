@@ -224,6 +224,14 @@ var nodeEach = function (node, route, cb) {
     }
 };
 
+var nodeGet = function (node, route) {
+    var res;
+    nodeEach(node, route, function (subnode) {
+        res = subnode;
+    });
+    return res;
+};
+
 var docEach = function (doc, route, cb) {
     var routeHead = _.head(route);
     var routeRest = _.rest(route);
@@ -265,4 +273,5 @@ _.extend(module.exports, {
     , docEach: docEach
     , docAction: docAction
     , docGet: docGet
+    , nodeGet: nodeGet
 });
