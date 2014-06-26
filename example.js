@@ -1,3 +1,5 @@
+/*jslint node: true */
+"use strict";
 
 var xml = require('./index');
 var eyes = require('eyes');
