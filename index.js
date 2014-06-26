@@ -261,6 +261,15 @@ var docFind = function (doc, route, test) {
     }
 };
 
+var docGet = function (doc, route) {
+    var res;
+    docFind(doc, route, function (node) {
+        res = node;
+        return true;
+    });
+    return res;
+};
+
 var nodeGet = function (node, route) {
     var res;
     nodeEach(node, route, function (subnode) {
@@ -275,14 +284,6 @@ var docEach = function (doc, route, cb) {
     if (routeHead === doc.root.name) {
         nodeEach(doc.root, route.slice(1), cb);
     }
-};
-
-var docGet = function (doc, route) {
-    var res;
-    docEach(doc, route, function (node) {
-        res = node;
-    });
-    return res;
 };
 
 var docAction = function (doc, route, action) {

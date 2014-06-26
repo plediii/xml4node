@@ -312,3 +312,14 @@ describe('docFind', function () {
         assert.deepEqual(collection, ['a', 'b', 'c', 'd', 'e', 'f']);
     });
 });
+
+describe('docGet', function () {
+    it('should return the first matching node', function () {
+        var target = xml.docGet(xml.doc(xml.elt('doll', [xml.elt('doll', [xml.text('a')])
+                                             , xml.elt('doll', [xml.text('b')])
+                                             , xml.elt('doll', [xml.text('c')])
+                                             , xml.elt('doll', [xml.text('d')])]))
+                    , ['doll', 'doll']);
+        assert.equal(xml.value(target), 'a');
+    });
+});
