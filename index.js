@@ -29,25 +29,18 @@ var doc = function (root) {
 var text = function (str) {
     return {
         type: 'text'
-        , name: 'text()'  // this shouldn't be used
+        , name: 'text()'
         , body: '' + str
     };
 };
 
 var parseNode = function (str, cb) {
-    return parseString('<root>' + str + '</root>', function (err, doc) {
-        if (err) {
-            throw err;
-        }
-        return cb(doc.root.children[0]);
-    });
+    return parseString('<root>' + str + '</root>').root.children[0];
 };
 
 var appendNode = function (parent, node) {
     if (_.isString(node)) {
-        return parseNode(node, function (parsed) {
-            appendNode(parent, parsed);
-        });
+        node = parseNode(node);
     }
     parent.children.push(node);
     (parent.hash[node.name] || (parent.hash[node.name] = [])).push(node);
@@ -62,9 +55,7 @@ var removeNode = function (parent, nodename) {
 
 var defaultNode = function (parent, node) {
     if (_.isString(node)) {
-        return parseNode(node, function (parsed) {
-            defaultNode(parent, parsed);
-        });
+        node = parseNode(node);
     }
     if (!parent.hash.hasOwnProperty(node.name)) {
         appendNode(parent, node);
@@ -73,9 +64,7 @@ var defaultNode = function (parent, node) {
 
 var setNode = function (parent, node) {
     if (_.isString(node)) {
-        return parseNode(node, function (parsed) {
-            setNode(parent, parsed);
-        });
+        node = parseNode(node);
     }
     removeNode(parent, node.name);
     appendNode(parent, node);
@@ -113,7 +102,7 @@ var nodeToString = function (node) {
     if (attrs) {
         s += ' ' + attrs;
     }
-    if (node.isSelfClosing) {
+    if (node.children.length === 0 && _.keys(node.attributes).length === 0) {
         s += '/>';
     }
     else {
@@ -144,7 +133,7 @@ var withoutBOM = function (str) {
     }
 };
 
-var parseString = function (str, cb) {
+var parseString = function (str) {
 
     var parser = sax.parser(true, {
         trim: false
@@ -156,7 +145,7 @@ var parseString = function (str, cb) {
     var nodes = [];
     var xmldoc = {};
     parser.onerror = function (e) {
-        return cb(e);
+        throw e;
         // this._parser.error = null
         // this._parser.resume()
     };
@@ -202,13 +191,18 @@ var parseString = function (str, cb) {
         }
     };
 
+    var ended = false;
     parser.onend = function () {
-        cb(null, xmldoc);
+        ended = true;
     };
 
     parser
         .write(withoutBOM(str.toString()))
         .close();
+    if (!ended) {
+        throw 'Premature end.'
+    }
+    return xmldoc;
 };
 
 var nodeEach = function (node, route, cb) {
@@ -304,6 +298,7 @@ var docAction = function (doc, route, action) {
 
 _.extend(module.exports, {
     parseString: parseString
+    , parseNode: parseNode
     , docToString: docToString
     , nodeToString: nodeToString
     , elt: elt
