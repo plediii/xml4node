@@ -70,7 +70,7 @@ var setNode = function (parent, node) {
     appendNode(parent, node);
 };
 
-var elt = function (options, children) {
+var elt = function (options, attrs, children) {
     var x = {
         attributes: {}
         , children: []
@@ -79,14 +79,21 @@ var elt = function (options, children) {
 
     if (_.isString(options)) {
         x.name = options;
+
+        if (_.isArray(attrs)) {
+            children = attrs;
+            attrs = {};
+        }
+
+        x.attributes = attrs;
+        _.each(children, function (child) {
+            appendNode(x, child);
+        });
     }
     else {
         _.extend(x, options);
     }
 
-    _.each(children, function (child) {
-        appendNode(x, child);
-    });
     return x;
 };
 
@@ -102,7 +109,7 @@ var nodeToString = function (node) {
     if (attrs) {
         s += ' ' + attrs;
     }
-    if (node.children.length === 0 && _.keys(node.attributes).length === 0) {
+    if (node.children.length === 0) {
         s += '/>';
     }
     else {
