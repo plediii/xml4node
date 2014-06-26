@@ -62,8 +62,8 @@ describe('parseNode', function () {
         assert(node.children);
         assert.equal(1, node.children.length);
         assert.equal('data', node.children[0].name);
-        assert(node.hash['data']);
-        assert.equal(1, node.hash['data'].length);
+        assert(node.hash.data);
+        assert.equal(1, node.hash.data.length);
     });
 
     it('should correctly parse a pair of different elements', function () {
@@ -74,10 +74,10 @@ describe('parseNode', function () {
         assert.equal(2, node.children.length);
         assert.equal('data', node.children[0].name);
         assert.equal('host', node.children[1].name);
-        assert(node.hash['data']);
-        assert.equal(1, node.hash['data'].length);
-        assert(node.hash['host']);
-        assert.equal(1, node.hash['host'].length);
+        assert(node.hash.data);
+        assert.equal(1, node.hash.data.length);
+        assert(node.hash.host);
+        assert.equal(1, node.hash.host.length);
     });
 
 
@@ -89,8 +89,8 @@ describe('parseNode', function () {
         assert.equal(2, node.children.length);
         assert.equal('data', node.children[0].name);
         assert.equal('data', node.children[1].name);
-        assert(node.hash['data']);
-        assert.equal(2, node.hash['data'].length);
+        assert(node.hash.data);
+        assert.equal(2, node.hash.data.length);
     });
 
 
@@ -104,8 +104,8 @@ describe('parseNode', function () {
         assert(node.hash['text()']);
         assert.equal(1, node.hash['text()'].length);
         assert.equal('data', node.children[1].name);
-        assert(node.hash['data']);
-        assert.equal(1, node.hash['data'].length);
+        assert(node.hash.data);
+        assert.equal(1, node.hash.data.length);
     });
 
     it('should correctly parse an two identical elements  and text in the correct order', function () {
@@ -150,7 +150,7 @@ describe('setNode', function () {
         xml.setNode(parent, child);
         assert.equal(parent.children.length, 1);
         assert.equal(parent.children[0].name, 'baby');
-        assert.equal(parent.hash['baby'].length, 1);
+        assert.equal(parent.hash.baby.length, 1);
     });
 
     it('should replace an existing node', function () {
@@ -159,16 +159,16 @@ describe('setNode', function () {
         xml.setNode(parent, alice);
         var betty = xml.elt('baby', [xml.text('betty')]);
         xml.setNode(parent, betty);
-        assert.equal(parent.hash['baby'].length, 1);
-        assert.equal(xml.value(parent.hash['baby'][0]), 'betty');
+        assert.equal(parent.hash.baby.length, 1);
+        assert.equal(xml.value(parent.hash.baby[0]), 'betty');
     });
 
     it('should parse a string second argument', function () {
         var parent = xml.elt('mama');
         xml.setNode(parent, '<baby>betty</baby>');
-        assert(parent.hash['baby']);
-        assert.equal(parent.hash['baby'].length, 1);
-        assert.equal(xml.value(parent.hash['baby'][0]), 'betty');
+        assert(parent.hash.baby);
+        assert.equal(parent.hash.baby.length, 1);
+        assert.equal(xml.value(parent.hash.baby[0]), 'betty');
     });
 
 
@@ -182,7 +182,7 @@ describe('appendNode', function () {
         xml.appendNode(parent, child);
         assert.equal(parent.children.length, 1);
         assert.equal(parent.children[0].name, 'baby');
-        assert.equal(parent.hash['baby'].length, 1);
+        assert.equal(parent.hash.baby.length, 1);
     });
 
     it('should add an existing node', function () {
@@ -191,16 +191,16 @@ describe('appendNode', function () {
         xml.appendNode(parent, alice);
         var betty = xml.elt('baby', [xml.text('betty')]);
         xml.appendNode(parent, betty);
-        assert.equal(parent.hash['baby'].length, 2);
-        assert.equal(xml.value(parent.hash['baby'][0]), 'alice');
-        assert.equal(xml.value(parent.hash['baby'][1]), 'betty');
+        assert.equal(parent.hash.baby.length, 2);
+        assert.equal(xml.value(parent.hash.baby[0]), 'alice');
+        assert.equal(xml.value(parent.hash.baby[1]), 'betty');
     });
 
     it('should parse a string second argument', function () {
         var parent = xml.elt('mama');
         xml.appendNode(parent, '<baby>betty</baby>');
-        assert.equal(parent.hash['baby'].length, 1);
-        assert.equal(xml.value(parent.hash['baby'][0]), 'betty');
+        assert.equal(parent.hash.baby.length, 1);
+        assert.equal(xml.value(parent.hash.baby[0]), 'betty');
     });
 
 
@@ -214,7 +214,7 @@ describe('defaultNode', function () {
         xml.defaultNode(parent, child);
         assert.equal(parent.children.length, 1);
         assert.equal(parent.children[0].name, 'baby');
-        assert.equal(parent.hash['baby'].length, 1);
+        assert.equal(parent.hash.baby.length, 1);
     });
 
     it('should not replace an existing node', function () {
@@ -223,15 +223,15 @@ describe('defaultNode', function () {
         xml.defaultNode(parent, alice);
         var betty = xml.elt('baby', [xml.text('betty')]);
         xml.defaultNode(parent, betty);
-        assert.equal(parent.hash['baby'].length, 1);
-        assert.equal(xml.value(parent.hash['baby'][0]), 'alice');
+        assert.equal(parent.hash.baby.length, 1);
+        assert.equal(xml.value(parent.hash.baby[0]), 'alice');
     });
 
     it('should parse a string second argument', function () {
         var parent = xml.elt('mama');
         xml.defaultNode(parent, '<baby>betty</baby>');
-        assert.equal(parent.hash['baby'].length, 1);
-        assert.equal(xml.value(parent.hash['baby'][0]), 'betty');
+        assert.equal(parent.hash.baby.length, 1);
+        assert.equal(xml.value(parent.hash.baby[0]), 'betty');
     });
 
 });
@@ -286,7 +286,7 @@ describe('docFind', function () {
                     , ['doll', 'doll']
                     , function (doll) {
                         collection.push(xml.value(doll));
-                        return xml.value(doll) === 'b'
+                        return xml.value(doll) === 'b';
                     });
         assert.equal(xml.value(target), 'b');
         assert.deepEqual(collection, ['a', 'b']);
@@ -306,7 +306,7 @@ describe('docFind', function () {
                     , ['matroska', 'doll', 'doll']
                     , function (doll) {
                         collection.push(xml.value(doll));
-                        return xml.value(doll) === 'f'
+                        return xml.value(doll) === 'f';
                     });
         assert.equal(xml.value(target), 'f');
         assert.deepEqual(collection, ['a', 'b', 'c', 'd', 'e', 'f']);

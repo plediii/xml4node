@@ -13,7 +13,7 @@ var escape = function (str, options) {
 };
 
 var docToString = function (doc) {
-    var s = ''
+    var s = '';
     if (doc.prolog) {
         s = '<?xml ' + doc.prolog.body + '?>';
     }
@@ -171,7 +171,7 @@ var parseString = function (str) {
             console.log('spare text: ', str);
         }
         else {
-            var node = text(str)
+            var node = text(str);
             parent.children.push(node);
             var hash = parent.hash[node.name] || (parent.hash[node.name] = []);
             hash.push(node);            
@@ -200,7 +200,7 @@ var parseString = function (str) {
         .write(withoutBOM(str.toString()))
         .close();
     if (!ended) {
-        throw 'Premature end.'
+        throw 'Premature end.';
     }
     return xmldoc;
 };
