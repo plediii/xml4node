@@ -34,6 +34,14 @@ var text = function (str) {
     };
 };
 
+var processinginstruction = function (name, body) {
+    return {
+        type: 'processing'
+        , name: name
+        , body: body
+    };
+};
+
 var parseNode = function (str, cb) {
     return parseString('<root>' + str + '</root>').root.children[0];
 };
@@ -322,4 +330,5 @@ _.extend(module.exports, {
     , nodeGet: nodeGet
     , docFind: docFind
     , nodeFind: nodeFind
+    , processinginstruction: processinginstruction
 });

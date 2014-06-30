@@ -224,6 +224,16 @@ describe('nodeToString', function () {
         assert.equal(xml.nodeToString(elt), '<character>&amp;</character>');
     });
 
+    it('should correctly output a prolog processing instruction', function () {
+        var elt = xml.elt('photoshoot', [xml.processinginstruction('super', 'model')]);
+        assert.equal(xml.nodeToString(elt), '<photoshoot><?super model?></photoshoot>');
+    });
+
+
+});
+
+describe('docSet', function () {
+    it('should add a new element ')
 });
 
 describe('setNode', function () {
