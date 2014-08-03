@@ -106,6 +106,9 @@ var elt = function (options, attrs, children) {
 };
 
 var value = function (node) {
+    if (!node || !node.children || node.children.length < 1) {
+        return void 0;
+    }
     return node.children[0].body;
 };
 
