@@ -115,14 +115,16 @@ describe('nodeToString', function () {
 
         it('should correctly convert an element with a child to a string', function () {
             var elt = xml.elt('tag', [xml.elt('child')]);
-            assert.equal(xml.nodeToString(elt, { pretty: true}), '<tag><child/></tag>');
+            assert.equal(xml.nodeToString(elt, { pretty: true})
+                         , ['<tag>', '    <child/>', '</tag>'].join('\n'));
             testParents(elt);
         });
 
         it('should correctly ignore isSelfClosing attribute', function () {
             var elt = xml.elt('tag', [xml.elt('child')]);
             elt.isSelfClosing = true;
-            assert.equal(xml.nodeToString(elt, { pretty : true}), '<tag><child/></tag>');
+            assert.equal(xml.nodeToString(elt, { pretty : true})
+                         , ['<tag>', '    <child/>', '</tag>'].join('\n'));
             testParents(elt);
         });
 
@@ -166,7 +168,8 @@ describe('nodeToString', function () {
 
         it('should correctly output an attribute and child node', function () {
             var elt = xml.elt('alien', { type: 'person'}, [xml.elt('sigourney')]);
-            assert.equal(xml.nodeToString(elt, { pretty: true }), '<alien type="person"><sigourney/></alien>');
+            assert.equal(xml.nodeToString(elt, { pretty: true })
+                         , ['<alien type="person">', '    <sigourney/>', '</alien>'].join('\n'));
             testParents(elt);
         });
 
@@ -197,7 +200,8 @@ describe('nodeToString', function () {
 
         it('should correctly output a prolog processing instruction', function () {
             var elt = xml.elt('photoshoot', [xml.processinginstruction('super', 'model')]);
-            assert.equal(xml.nodeToString(elt, { pretty: true }), '<photoshoot><?super model?></photoshoot>');
+            assert.equal(xml.nodeToString(elt, { pretty: true })
+                         , ['<photoshoot>', '    <?super model?>', '</photoshoot>'].join('\n'));
             testParents(elt);
         });
 
