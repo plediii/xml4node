@@ -50,6 +50,7 @@ var appendNode = function (parent, node) {
     if (_.isString(node)) {
         node = parseNode(node);
     }
+    node.parent = parent;
     parent.children.push(node);
     (parent.hash[node.name] || (parent.hash[node.name] = [])).push(node);
 };
@@ -63,8 +64,9 @@ var removeNode = function (parent, nodename) {
 
 var defaultNode = function (parent, node) {
     if (_.isString(node)) {
-        node = parseNode(node);
+        node = parseNode(node, parent);
     }
+    node.parent = parent;
     if (!parent.hash.hasOwnProperty(node.name)) {
         appendNode(parent, node);
     }
@@ -74,6 +76,7 @@ var setNode = function (parent, node) {
     if (_.isString(node)) {
         node = parseNode(node);
     }
+    node.parent = parent;
     removeNode(parent, node.name);
     appendNode(parent, node);
 };
@@ -176,6 +179,7 @@ var parseString = function (str) {
             node.type = 'processing';
             parent.children.push(node);
         }
+        node.parent = parent;
     };
     parser.onopentag = function (node) {
         nodestack.push(node);
@@ -191,6 +195,7 @@ var parseString = function (str) {
         else {
             var node = text(str);
             parent.children.push(node);
+            node.parent = parent;
             var hash = parent.hash[node.name] || (parent.hash[node.name] = []);
             hash.push(node);            
         }
@@ -199,6 +204,7 @@ var parseString = function (str) {
     parser.onclosetag =function (nodename) {
         var node = nodestack.pop();
         var parent = _.last(nodestack);
+        node.parent = parent;
         if (parent) {
             parent.children.push(node);
             var hash = parent.hash[node.name] || (parent.hash[node.name] = []);
