@@ -153,7 +153,7 @@ var nodeToString = function (node, options) {
                     s += '<?' + child.name + ' ' + child.body + '?>';
                 }
                 else {
-                    s += nodeToString(child, pretty);
+                    s += nodeToString(child, options);
                 }
             }
             

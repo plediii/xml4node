@@ -205,6 +205,14 @@ describe('nodeToString', function () {
             testParents(elt);
         });
 
+        it('should correctly convert an element with a child and grand child to a string', function () {
+            var elt = xml.elt('tag', [xml.elt('child', [xml.elt('grandchild')])]);
+            assert.equal(xml.nodeToString(elt, { pretty: true })
+                         , ['<tag>', '    <child>', '        <grandchild/>', '    </child>', '</tag>'].join('\n'));
+            testParents(elt);
+        });
+
+
     });
 
 });
