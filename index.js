@@ -12,12 +12,12 @@ var escape = function (str, options) {
     ;
 };
 
-var docToString = function (doc) {
+var docToString = function (doc, options) {
     var s = '';
     if (doc.prolog) {
         s = '<?xml ' + doc.prolog.body + '?>';
     }
-    return s + nodeToString(doc.root);
+    return s + nodeToString(doc.root, options);
 };
 
 var doc = function (root) {
