@@ -34,6 +34,15 @@ var text = function (str) {
     };
 };
 
+var comment = function (str) {
+    return {
+        type: 'comment'
+        , name: 'comment()'
+        , body: '' + str
+    };
+};
+
+
 var processinginstruction = function (name, body) {
     return {
         type: 'processing'
@@ -206,6 +215,14 @@ var parseString = function (str) {
         }
         node.parent = parent;
     };
+    parser.oncomment = function (body) {
+        console.log('comment ', node);
+        var parent = _.last(nodestack);
+        var node = comment(body);
+        parent.children.push(node);
+        node.parent = parent;
+    };
+
     parser.onopentag = function (node) {
         nodestack.push(node);
         nodes.push(node);
