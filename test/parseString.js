@@ -3,6 +3,7 @@
 var assert = require('assert')
 , _ = require('underscore')
 , xml = require('../index.js')
+, testParents = require('./testParents')
 ;
 
 describe('parseString', function () {
@@ -15,6 +16,7 @@ describe('parseString', function () {
         assert.deepEqual(doc.root.children, []);
         assert.deepEqual(doc.root.hash, {});
         assert.deepEqual(doc.root.attributes, {});
+        testParents(doc.root);
     });
 
     it('should fail to parse an invalid root node', function () {
@@ -29,6 +31,7 @@ describe('parseString', function () {
         assert(doc.prolog);
         assert.equal(doc.root.name, 'server');
         assert.equal(doc.prolog.body, 'version="6.0"');
+        testParents(doc.root);
     });
 
 
@@ -39,6 +42,7 @@ describe('parseString', function () {
         assert.equal(doc.root.name, 'server');
         assert.equal(doc.root.children.length, 1);
         assert.equal(doc.prolog.body, 'version="6.0"');
+        testParents(doc.root);
     });
 
 

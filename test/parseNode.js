@@ -3,6 +3,7 @@
 var assert = require('assert')
 , _ = require('underscore')
 , xml = require('../index.js')
+, testParents = require('./testParents')
 ;
 
 describe('parseNode', function () {
@@ -11,6 +12,7 @@ describe('parseNode', function () {
         var node = xml.parseNode('<?xml version="8.6"?>');
         assert.equal(node.type, 'processing')
         assert.equal(node.body, 'version="8.6"');
+        testParents(node);
     });
 
 
@@ -21,6 +23,7 @@ describe('parseNode', function () {
         assert.deepEqual(node.children, []);
         assert.deepEqual(node.hash, {});
         assert.deepEqual(node.attributes, {});
+        testParents(node);
     });
 
     it('should fail to parse an invalid root node', function () {
@@ -40,6 +43,7 @@ describe('parseNode', function () {
         assert.equal('text', node.hash['text()'][0].type);
         assert.equal('serverdata', node.hash['text()'][0].body);
         assert.deepEqual(node.attributes, {});
+        testParents(node);
     });
 
     it('should correctly parse a node with a child element', function () {
@@ -51,6 +55,7 @@ describe('parseNode', function () {
         assert.equal('data', node.children[0].name);
         assert(node.hash.data);
         assert.equal(1, node.hash.data.length);
+        testParents(node);
     });
 
     it('should correctly parse a pair of different elements', function () {
@@ -65,6 +70,7 @@ describe('parseNode', function () {
         assert.equal(1, node.hash.data.length);
         assert(node.hash.host);
         assert.equal(1, node.hash.host.length);
+        testParents(node);
     });
 
 
@@ -78,6 +84,7 @@ describe('parseNode', function () {
         assert.equal('data', node.children[1].name);
         assert(node.hash.data);
         assert.equal(2, node.hash.data.length);
+        testParents(node);
     });
 
 
@@ -93,6 +100,7 @@ describe('parseNode', function () {
         assert.equal('data', node.children[1].name);
         assert(node.hash.data);
         assert.equal(1, node.hash.data.length);
+        testParents(node);
     });
 
     it('should correctly parse an two identical elements  and text in the correct order', function () {
@@ -104,6 +112,7 @@ describe('parseNode', function () {
         assert.equal('data', node.children[0].name);
         assert.equal('text()', node.children[1].name);
         assert.equal('data', node.children[2].name);
+        testParents(node);
     });
 
 });

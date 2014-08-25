@@ -3,6 +3,7 @@
 var assert = require('assert')
 , _ = require('underscore')
 , xml = require('../index.js')
+, testParents = require('./testParents')
 ;
 
 describe('defaultNode', function () {
@@ -14,6 +15,7 @@ describe('defaultNode', function () {
         assert.equal(parent.children.length, 1);
         assert.equal(parent.children[0].name, 'baby');
         assert.equal(parent.hash.baby.length, 1);
+        testParents(parent);
     });
 
     it('should not replace an existing node', function () {
@@ -24,6 +26,7 @@ describe('defaultNode', function () {
         xml.defaultNode(parent, betty);
         assert.equal(parent.hash.baby.length, 1);
         assert.equal(xml.value(parent.hash.baby[0]), 'alice');
+        testParents(parent);
     });
 
     it('should parse a string second argument', function () {
@@ -31,6 +34,7 @@ describe('defaultNode', function () {
         xml.defaultNode(parent, '<baby>betty</baby>');
         assert.equal(parent.hash.baby.length, 1);
         assert.equal(xml.value(parent.hash.baby[0]), 'betty');
+        testParents(parent);        
     });
 
 });
