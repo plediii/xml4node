@@ -42,7 +42,7 @@ var processinginstruction = function (name, body) {
     };
 };
 
-var parseNode = function (str, cb) {
+var parseNode = function (str) {
     return parseString('<root>' + str + '</root>').root.children[0];
 };
 
