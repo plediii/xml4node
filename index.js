@@ -115,7 +115,17 @@ var value = function (node) {
     return node.children[0].body;
 };
 
-var nodeToString = function (node) {
+var indentToNextLine = function (parent) {
+    var s = ''
+    s += '\n';
+    while (parent) {
+        s += '    ';
+        parent = parent.parent;
+    }
+    return s;
+};
+
+var nodeToString = function (node, pretty) {
     var s = '<' + node.name;
     var attrs = _.map(node.attributes, function (v, k) {
         return k + '=' + '"' + escape(v) + '"';
@@ -128,17 +138,31 @@ var nodeToString = function (node) {
     }
     else {
         s += '>';
-        _.each(node.children, function (child) {
+        _.each(node.children, function (child, idx) {
             if (child.type === 'text') {
                 s += escape(child.body);
             }
-            else if (child.type === 'processing') {
-                s += '<?' + child.name + ' ' + child.body + '?>';
-            }
             else {
-                s += nodeToString(child);
+                if (pretty 
+                    && ((idx === 0 && child.type !== 'text') 
+                        || (idx > 0 && node.children[idx - 1].type !== 'text'))) {
+                    s += indentToNextLine(node);
+                }
+                if (child.type === 'processing') {
+                    s += '<?' + child.name + ' ' + child.body + '?>';
+                }
+                else {
+                    s += nodeToString(child, pretty);
+                }
             }
+            
         });
+        if (pretty
+            && _.any(node.children, function (child) {
+                return child.type !== 'text';
+            })) {
+            s += indentToNextLine(node.parent);
+        }
         s += '</' + node.name + '>';
     }
 
