@@ -45,6 +45,14 @@ describe('parseString', function () {
         testParents(doc.root);
     });
 
+    it('should correctly parse an xml comment', function () {
+        var doc = xml.parseString('<server><!--not really a server haha--></server>');
+        assert(doc.root);
+        assert.equal(doc.root.name, 'server');
+        assert.equal(doc.root.children.length, 1);
+        assert.equal(doc.root.children[0].body, 'not really a server haha');
+        testParents(doc.root);
+    });
 
 });
 
