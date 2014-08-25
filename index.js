@@ -125,7 +125,8 @@ var indentToNextLine = function (parent) {
     return s;
 };
 
-var nodeToString = function (node, pretty) {
+var nodeToString = function (node, options) {
+    var pretty = options && options.pretty;
     var s = '<' + node.name;
     var attrs = _.map(node.attributes, function (v, k) {
         return k + '=' + '"' + escape(v) + '"';
