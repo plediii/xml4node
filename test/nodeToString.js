@@ -104,6 +104,13 @@ describe('nodeToString', function () {
             testParents(elt);
         });
 
+        it('should correctly output comment nodes', function () {
+            var elt = xml.elt('tag', [xml.comment('willy wonka')]);
+            assert.equal(xml.nodeToString(elt, { pretty: false }), '<tag><!--willy wonka--></tag>');
+            testParents(elt);
+        });
+
+
     });
 
     describe('pretty', function () {
@@ -211,7 +218,6 @@ describe('nodeToString', function () {
                          , ['<tag>', '    <child>', '        <grandchild/>', '    </child>', '</tag>'].join('\n'));
             testParents(elt);
         });
-
 
     });
 
