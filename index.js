@@ -161,6 +161,9 @@ var nodeToString = function (node, options) {
                 if (child.type === 'processing') {
                     s += '<?' + child.name + ' ' + child.body + '?>';
                 }
+                else if (child.type === 'comment') {
+                    s += '<!--' + child.body + '-->';
+                }
                 else {
                     s += nodeToString(child, options);
                 }
@@ -216,7 +219,6 @@ var parseString = function (str) {
         node.parent = parent;
     };
     parser.oncomment = function (body) {
-        console.log('comment ', node);
         var parent = _.last(nodestack);
         var node = comment(body);
         parent.children.push(node);
@@ -382,4 +384,5 @@ _.extend(module.exports, {
     , docFind: docFind
     , nodeFind: nodeFind
     , processinginstruction: processinginstruction
+    , comment: comment
 });
