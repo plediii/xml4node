@@ -7,6 +7,7 @@ module.exports = function(grunt) {
         jshint: {
             options: {
                 laxcomma: true
+                , laxbreak: true
                 , strict: true
                 , globals: { 'require': false 
                              , 'describe': false
