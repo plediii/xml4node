@@ -10,7 +10,7 @@ describe('parseNode', function () {
 
     it('should correctly parse a processing instruction', function () {
         var node = xml.parseNode('<?xml version="8.6"?>');
-        assert.equal(node.type, 'processing')
+        assert.equal(node.type, 'processing');
         assert.equal(node.body, 'version="8.6"');
         testParents(node);
     });

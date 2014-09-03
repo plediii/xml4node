@@ -125,7 +125,7 @@ var value = function (node) {
 };
 
 var indentToNextLine = function (parent) {
-    var s = ''
+    var s = '';
     s += '\n';
     while (parent) {
         s += '    ';
