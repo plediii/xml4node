@@ -371,6 +371,14 @@ var docAction = function (doc, route, action) {
 };
 
 
+var copyNS = function (parent, child) {
+    _.each(parent.attributes, function (val, name) {
+        if (name.indexOf('xmlns:') === 0) {
+            child.attributes[name] = val;
+        }
+    });
+};
+
 _.extend(module.exports, {
     parseString: parseString
     , parseNode: parseNode
@@ -391,4 +399,5 @@ _.extend(module.exports, {
     , nodeFind: nodeFind
     , processinginstruction: processinginstruction
     , comment: comment
+    , copyNS: copyNS
 });
