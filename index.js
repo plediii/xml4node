@@ -91,30 +91,35 @@ var setNode = function (parent, node) {
 };
 
 var elt = function (options, attrs, children) {
-    var x = {
-        attributes: {}
-        , children: []
-        , hash: {}
-    };
-
     if (_.isString(options)) {
-        x.name = options;
+        var overrides = {
+            name: options
+        };
 
         if (_.isArray(attrs)) {
-            children = attrs;
-            attrs = {};
+            overrides.children = attrs;
         }
-
-        x.attributes = attrs;
-        _.each(children, function (child) {
-            appendNode(x, child);
-        });
+        else if (_.isObject(attrs)) {
+            overrides.attributes = attrs;
+            if (_.isArray(children)) {
+                overrides.children = children;
+            }
+        }
+        
+        return elt(overrides);
     }
     else {
-        _.extend(x, options);
+        var n = _.extend({
+            name: 'xmlnode'
+            , attributes: {}
+            , children: []
+            , hash: {}
+        }, _.omit(options, 'children')); 
+        _.each(options.children, function (c) {
+            appendNode(n, c);
+        });
+        return n;
     }
-
-    return x;
 };
 
 var value = function (node) {
@@ -347,6 +352,7 @@ var nodeGet = function (node, route) {
 };
 
 var docEach = function (doc, route, cb) {
+    console.log('doc each ', route);
     var routeHead = _.head(route);
     var routeRest = _.rest(route);
     if (routeHead === doc.root.name) {
