@@ -352,7 +352,6 @@ var nodeGet = function (node, route) {
 };
 
 var docEach = function (doc, route, cb) {
-    console.log('doc each ', route);
     var routeHead = _.head(route);
     var routeRest = _.rest(route);
     if (routeHead === doc.root.name) {
