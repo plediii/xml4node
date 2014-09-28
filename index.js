@@ -387,6 +387,7 @@ _.extend(module.exports, {
     , text: text
     , appendNode: appendNode
     , setNode: setNode
+    , nodeSet: setNode
     , defaultNode: defaultNode
     , doc: doc
     , value: value
